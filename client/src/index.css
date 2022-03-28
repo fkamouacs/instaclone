@@ -1,0 +1,80 @@
+:root {
+  --mobile-margin: 16px;
+  --mobile-nav-height: 44px;
+
+  --mobile-icon-size: 24px;
+
+  --border-color: #d8d8d8;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.nav {
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-color);
+  padding: 0 var(--mobile-margin);
+}
+
+.bttmNav {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid var(--border-color);
+}
+
+.nav,
+.bttmNav {
+  display: flex;
+  height: var(--mobile-nav-height);
+}
+
+.nav > *,
+.bttmNav > * {
+  align-self: center;
+}
+
+.nav__photo,
+.nav__msg,
+.bttmNav__home,
+.bttmNav__search,
+.bttmNav__upload,
+.bttmNav__activity,
+.bttmNav__profile {
+  height: var(--mobile-nav-height);
+  display: flex;
+  align-items: center;
+  line-height: 0;
+}
+
+.bttmNav__home,
+.bttmNav__search,
+.bttmNav__upload,
+.bttmNav__activity,
+.bttmNav__profile {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+
+.icon {
+  max-height: var(--mobile-icon-size);
+}
+
+.nav__logo {
+  display: flex;
+  height: var(--mobile-nav-height);
+  margin-top: 6px;
+}
+
+.nav__logo-link {
+  align-self: center;
+  line-height: 0;
+}
+
+.nav__logo-img {
+  max-height: var(--mobile-icon-size);
+}
