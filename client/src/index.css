@@ -1,8 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap");
 :root {
   --mobile-margin: 16px;
   --mobile-nav-height: 44px;
 
   --mobile-icon-size: 24px;
+  --mobile-font-size: 14px;
 
   --border-color: #d8d8d8;
 }
@@ -11,6 +13,17 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  font-family: "Lato", sans-serif;
+  color: rgba(38, 38, 38, 1);
+  font-size: var(--mobile-font-size);
+}
+
+body {
+  padding-bottom: var(--mobile-nav-height);
+}
+
+a {
+  text-decoration: none;
 }
 
 .nav {
@@ -24,6 +37,7 @@
   bottom: 0;
   width: 100%;
   border-top: 1px solid var(--border-color);
+  background-color: white;
 }
 
 .nav,
@@ -77,4 +91,74 @@
 
 .nav__logo-img {
   max-height: var(--mobile-icon-size);
+}
+
+/* ==================================== */
+/*               /POST                   */
+/* ==================================== */
+
+.post {
+  margin-bottom: 15px;
+}
+
+.post__owner {
+  display: flex;
+  padding: 14px 4px 14px 16px;
+}
+
+.post__owner-img {
+}
+
+.post__owner-pfp {
+  width: 32px;
+  height: 32px;
+}
+
+.post__owner-handle {
+  margin-left: 12px;
+  align-self: center;
+  margin-bottom: 3px;
+  font-weight: bold;
+}
+
+.post__img {
+  min-height: 275px;
+  background-color: #d8d8d8;
+}
+
+.post__interact {
+  padding: 0 16px;
+}
+
+.post__engage {
+  display: flex;
+  padding: 6px 8px 8px;
+  margin-top: 4px;
+}
+
+.post__engage-like,
+.post__engage-comment,
+.post__engage-share {
+  padding: 8px;
+  line-height: 0;
+}
+
+.post__likes {
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.post__body-desc {
+  display: flex;
+  margin-bottom: 4px;
+}
+
+.post__body-owner,
+.post__comment-owner {
+  padding-right: 4px;
+  font-weight: bold;
+}
+
+.post__comment {
+  display: flex;
 }

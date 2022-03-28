@@ -1,6 +1,7 @@
 const express = require("express");
 const postModel = require("../models/post");
 const router = express();
+const ObjectId = require("mongodb").ObjectId;
 
 router.get("/posts", async (request, response) => {
   const posts = await postModel.find({});
@@ -23,8 +24,24 @@ router.post("/add_post", async (request, response) => {
   }
 });
 
-router.get("/post/:_id", async (request, response) => {
-  response.send(request.params);
+router.get("/posts/:id", async (request, response) => {
+  let myquery = { _id: ObjectId(request.params) };
+  postModel.findOne(myquery, (err, post) => {
+    if (err) throw err;
+    response.json(post);
+  });
+});
+
+router.post("/posts/:id", async (request, response) => {
+  let myquery = { _id: ObjectId(request.params) };
+  let newvalue = {
+    likes: request.body.likes,
+  };
+  postModel.updateOne(myquery, newvalue, (err, result) => {
+    if (err) throw err;
+    console.log("updated");
+    response.json(result);
+  });
 });
 
 module.exports = router;
