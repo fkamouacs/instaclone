@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/navbar";
-import Feed from "./components/feed";
+import Profile from "./components/profile";
 import BttmNavbar from "./components/bttmNavbar";
 
 const App = () => {
@@ -9,7 +9,7 @@ const App = () => {
     <div>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Feed />} />
+        <Route path="/profile/:id" element={<Profile />} />
       </Routes>
       <BttmNavbar />
     </div>

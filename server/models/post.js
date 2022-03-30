@@ -3,15 +3,12 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
-  op: String,
+  profile: Number,
+  owner: String,
   likes: Number,
   desc: String,
-  comments: [
-    {
-      owner: String,
-      comment: String,
-    },
-  ],
+  date: Date,
+  comments: Number,
 });
 
 const Post = mongoose.model("Post", PostSchema);
