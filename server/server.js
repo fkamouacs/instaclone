@@ -6,7 +6,6 @@ const db = require("./db/conn");
 
 const profileRouter = require("./routes/profileRoutes");
 const postRouter = require("./routes/postRoutes");
-const commentRouter = require("./routes/commentRoutes");
 const port = 5000;
 
 app.use(cors());
@@ -16,7 +15,6 @@ app.options("*", cors());
 
 app.use(profileRouter);
 app.use(postRouter);
-app.use(commentRouter);
 
 db.on("error", console.error.bind(console, "connection error: "));
 db.once("open", function () {

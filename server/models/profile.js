@@ -8,6 +8,7 @@ const ProfileSchema = new Schema({
   bio: String,
   followers: [String],
   follows: [String],
+  posts: [String],
 });
 
 const Profile = mongoose.model("Profile", ProfileSchema);

@@ -8,7 +8,7 @@ const BttmNavbar = () => {
   return (
     <div className="bttmNav">
       <div className="bttmNav__home">
-        <a className="bttmNav__home-link" href="/home">
+        <a className="bttmNav__home-link" href="/">
           <img className="icon" src={home} alt="home" />
         </a>
       </div>
@@ -18,7 +18,7 @@ const BttmNavbar = () => {
         </a>
       </div>
       <div className="bttmNav__upload">
-        <a className="bttmNav__upload-link" href="/upload">
+        <a className="bttmNav__upload-link" href="/create">
           <img className="icon" src={upload} alt="upload" />
         </a>
       </div>

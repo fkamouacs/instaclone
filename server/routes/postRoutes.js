@@ -14,13 +14,29 @@ router.get("/p/:id", async (request, response) => {
 // post a post
 router.post("/add_post", async (request, response) => {
   const post = new postModel(request.body);
-
   try {
     await post.save();
     response.send(post);
   } catch (e) {
     response.status(500).send(e);
   }
+});
+
+// update a post
+router.post("/p/:id", async (request, response) => {
+  let myquery = { _id: ObjectId(request.params) };
+
+  let newvalue;
+  switch (request.body.type) {
+    case "like":
+      newvalue = {
+        likes: request.body.post.likes,
+      };
+  }
+  postModel.updateOne(myquery, newvalue, (err, result) => {
+    if (err) throw err;
+    response.json(result);
+  });
 });
 
 module.exports = router;

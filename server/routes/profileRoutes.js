@@ -4,14 +4,12 @@ const router = express();
 const ObjectId = require("mongodb").ObjectId;
 
 // get a profile by id
-router.get("/profile/:handle", async (request, response) => {
+router.get("/:handle", async (request, response) => {
   profileModel.findOne(request.params, (err, profile) => {
     if (err) throw err;
     response.json(profile);
   });
 });
-
-//update post
 
 // post a profile
 router.post("/add_profile", async (request, response) => {

@@ -8,9 +8,13 @@ const Profile = () => {
   const path = location.pathname;
 
   useEffect(() => {
+    // get profile
     fetch(`http://localhost:5000${path}`)
       .then((res) => res.json())
       .then((data) => setProfile(data));
+
+    // get posts
+    console.log(profile);
     return;
   }, []);
 

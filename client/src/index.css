@@ -7,6 +7,7 @@
   --mobile-font-size: 14px;
 
   --border-color: #d8d8d8;
+  --action-color: #0095f6;
 }
 
 * {
@@ -26,7 +27,9 @@ a {
   text-decoration: none;
 }
 
-.nav {
+.nav,
+.create-post__nav,
+.details__nav {
   justify-content: space-between;
   border-bottom: 1px solid var(--border-color);
   padding: 0 var(--mobile-margin);
@@ -41,13 +44,17 @@ a {
 }
 
 .nav,
-.bttmNav {
+.bttmNav,
+.create-post__nav,
+.details__nav {
   display: flex;
   height: var(--mobile-nav-height);
 }
 
 .nav > *,
-.bttmNav > * {
+.bttmNav > *,
+.create-post__nav > *,
+.details__nav > * {
   align-self: center;
 }
 
@@ -161,4 +168,80 @@ a {
 
 .post__comment {
   display: flex;
+}
+
+/* ==================================== */
+/*               /Create                */
+/*               /Details               */
+/* ==================================== */
+.create-post__nav-close,
+.details__nav-back {
+  line-height: 0;
+}
+
+.create-post__nav-title,
+.details__nav-title {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.create-post__nav-next,
+.details__nav-share {
+  color: var(--action-color);
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  background: 0;
+}
+
+.create-post__img {
+  height: 375px;
+  background-color: #d8d8d8;
+}
+
+.create-post__edit-options {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid var(--border-color);
+  background-color: white;
+  height: var(--mobile-nav-height);
+  display: flex;
+  justify-content: space-around;
+}
+
+.create-post__edit-options > * {
+  align-self: center;
+}
+
+.create-post__filter,
+.create-post__edit {
+  background: 0;
+  border: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.create-post__filter {
+  border-right: 1px solid var(--border-color);
+}
+
+.create-post__edit {
+  border-right: 1px solid var(--border-color);
+}
+
+.details__caption {
+  width: 100%;
+  height: 81px;
+  padding: 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.details__caption-input {
+  width: 100%;
+  border: none;
+  outline-style: none;
+  resize: none;
+  height: 45px;
+  line-height: 18px;
 }

@@ -1,44 +1,51 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import activity from "../assets/activity.svg";
 import comment from "../assets/comment.svg";
 import msg from "../assets/msg.svg";
 import profile from "../assets/profile.jpg";
 
-const Comment = (props) => {
-  return (
-    <div className="post__comment">
-      <div className="post__comment-owner">{props.comment.owner}</div>
-      <div className="post__comment-comment">{props.comment.comment} </div>
-    </div>
-  );
-};
+// const Comment = (props) => {
+//   return (
+//     <div className="post__comment">
+//       <div className="post__comment-owner">{props.comment.owner}</div>
+//       <div className="post__comment-comment">{props.comment.comment} </div>
+//     </div>
+//   );
+// };
 
-const displayComments = (comments) => {
-  return comments.map((comment) => {
-    return <Comment key={comment._id} comment={comment} />;
-  });
-};
+// const displayComments = (comments) => {
+//   return comments.map((comment) => {
+//     return <Comment key={comment._id} comment={comment} />;
+//   });
+// };
 
-const Post = (props) => {
-  const [post, setPost] = useState();
+const Post = () => {
+  const [post, setPost] = useState({});
+
+  const location = useLocation();
+  const path = location.pathname;
 
   useEffect(() => {
-    setPost(props);
-  });
+    fetch(`http://localhost:5000${path}`)
+      .then((res) => res.json())
+      .then((data) => setPost(data));
+    return;
+  }, []);
 
   const onLike = async () => {
     const updatedPost = post;
-    updatedPost.post.likes++;
+    updatedPost.likes++;
 
-    await fetch(`http://localhost:5000/p/${post.post._id}/likes`, {
+    await fetch(`http://localhost:5000/p/${post._id}`, {
       method: "POST",
-      body: JSON.stringify(post.post),
+      body: JSON.stringify({ post: updatedPost, type: "like" }),
       headers: {
         "Content-Type": "application/json",
       },
     });
-
-    setPost(updatedPost.post);
+    setPost({});
+    setPost(updatedPost);
   };
 
   return (
@@ -48,7 +55,7 @@ const Post = (props) => {
           <img className="post__owner-pfp" src={profile} alt="temp pfp" />
         </div>
         <div className="post__owner-handle">
-          <a href={"/"}>{props.post.owner}</a>
+          <a href={"/"}>{post != undefined && post.owner}</a>
         </div>
       </div>
       <div className="post__img"></div>
@@ -64,13 +71,16 @@ const Post = (props) => {
         </div>
       </div>
       <div className="post__interact">
-        <div className="post__likes">{`${props.post.likes} likes`}</div>
+        <div className="post__likes">{`${
+          post != undefined && post.likes
+        } likes`}</div>
         <div className="post__body">
           <div className="post__body-desc">
-            <p className="post__body-owner">{props.post.owner}</p>
-            {props.post.desc}
+            <p className="post__body-owner">
+              {post != undefined && post.owner}
+            </p>
+            {post != undefined && post.desc}
           </div>
-          {displayComments(props.post.comments)}
         </div>
       </div>
     </div>

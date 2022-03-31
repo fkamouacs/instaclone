@@ -1,3 +1,4 @@
+import React from "react";
 import logo from "../assets/logo.png";
 import photo from "../assets/photo.svg";
 import msg from "../assets/msg.svg";
