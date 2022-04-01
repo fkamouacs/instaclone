@@ -21,15 +21,3 @@ const App = () => {
 };
 
 export default App;
-{
-  /* <Routes>
-        <Route path="/" element={<Navbar />} />
-      </Routes>
-
-      <Routes>
-        <Route path="/create" element={<CreatePost />} />
-        <Route path="/:id" element={<Profile />} />
-        <Route path="/p/:id" element={<Post />} />
-      </Routes>
-      <BttmNavbar /> */
-}

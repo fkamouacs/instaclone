@@ -18,9 +18,16 @@
   color: rgba(38, 38, 38, 1);
   font-size: var(--mobile-font-size);
 }
+html {
+  height: 100%;
+}
 
 body {
-  padding-bottom: var(--mobile-nav-height);
+  height: 100%;
+}
+
+#root {
+  height: 100%;
 }
 
 a {
@@ -230,6 +237,16 @@ a {
   border-right: 1px solid var(--border-color);
 }
 
+.details {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.details__focus {
+  flex-grow: 1;
+}
+
 .details__caption {
   width: 100%;
   height: 81px;
@@ -244,4 +261,8 @@ a {
   resize: none;
   height: 45px;
   line-height: 18px;
+}
+
+.text-focus {
+  background-color: rgba(38, 38, 38, 0.4);
 }
