@@ -326,3 +326,7 @@ a {
 .signup__body-btn-active {
   background-color: var(--action-color);
 }
+
+.signup__body-input-invalid {
+  color: rgba(237, 73, 86, 1);
+}

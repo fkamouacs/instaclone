@@ -26,6 +26,17 @@ router.post("/register", (request, response) => {
   });
 });
 
+// check if valid email
+router.post("/register/email", (req, res) => {
+  UserModel.findOne({ email: req.body.email }).then((user) => {
+    if (user) {
+      return res.status(400).json({ email: "email already registered" });
+    } else {
+      return res.status(200).json({ msg: "email not registered" });
+    }
+  });
+});
+
 // log in a user
 router.get("/login", (req, res) => {
   const userLoggingIn = req.body;

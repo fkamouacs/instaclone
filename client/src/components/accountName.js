@@ -3,8 +3,7 @@ import { useLocation } from "react-router-dom";
 
 const AccountName = () => {
   const location = useLocation();
-  console.log(location);
-  return <div>accoutname</div>;
+  return <div>{location.state[0]}</div>;
 };
 
 export default AccountName;

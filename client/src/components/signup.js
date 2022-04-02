@@ -5,8 +5,8 @@ import back from "../assets/back.svg";
 const Signup = () => {
   const [email, setEmail] = useState();
   const [active, setActive] = useState();
+  const [invalid, setInvalid] = useState(false);
   const navigate = useNavigate();
-
   const goBack = () => {
     navigate(-1);
   };
@@ -15,9 +15,12 @@ const Signup = () => {
     email === undefined || email === ""
       ? setActive("")
       : setActive("signup__body-btn-active");
+
+    setInvalid(invalid);
   });
 
   const logKey = (e) => {
+    setInvalid(false);
     if (e.key === "Enter") {
       e.target.blur();
       next();
@@ -27,7 +30,22 @@ const Signup = () => {
   };
 
   const next = () => {
-    navigate("name", { state: validateEmail(email) });
+    if (validateEmail(email)) {
+      // check if email is registered
+      fetch("http://localhost:5000/register/email", {
+        method: "POST",
+        body: JSON.stringify({ email: email }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((res) =>
+        res.status === 200
+          ? navigate("name", { state: validateEmail(email) })
+          : setInvalid(true)
+      );
+    } else {
+      setInvalid(true);
+    }
   };
 
   const validateEmail = (email) => {
@@ -57,6 +75,7 @@ const Signup = () => {
             type="email"
             onKeyUp={logKey}
           />
+          {invalid && <div className="signup__body-input-invalid">invalid</div>}
         </div>
         <button className={`signup__body-btn ${active}`} onClick={next}>
           Next
