@@ -5,9 +5,9 @@ const ObjectId = require("mongodb").ObjectId;
 
 // get a post by id
 router.get("/p/:id", async (request, response) => {
-  postModel.findOne(request.params, (err, post) => {
-    if (err) throw err;
-    response.json(post);
+  const id = request.params.id;
+  postModel.findOne(id, function (err, post) {
+    response.send(post.json());
   });
 });
 

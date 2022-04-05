@@ -1,34 +1,41 @@
 const express = require("express");
-const UserModel = require("../models/user");
 const router = express();
-const ObjectId = require("mongodb").ObjectId;
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const User = require("../models/user");
+const { db } = require("../models/user");
+
+router.get("/isUserAuth", jwt.verifyJWT, (req, res) => {
+  return res.json({ isLoggedIn: true, username: req.user.username });
+});
 
 // create a user
-router.post("/register", (request, response) => {
-  // Check if email is not registered
-  UserModel.findOne({ email: request.body.email }).then((user) => {
-    if (user) {
-      return response
-        .status(400)
-        .json({ email: "A user has already regiestered with this email" });
-    } else {
-      const newUser = new UserModel({
-        username: request.body.username,
-        email: request.body.email,
-        password: request.body.password,
-      });
+router.post("/register", async (req, res) => {
+  const user = req.body;
+  const takenUsername = await User.findOne({ username: user.username });
+  const takenEmail = await User.findOne({ email: user.email });
 
-      newUser.save();
-      return response.status(200).json({ msg: newUser });
-    }
-  });
+  if (takenUsername || takenEmail) {
+    res
+      .status(400)
+      .json({ message: "Username or email has already been registered" });
+  } else {
+    user.password = await bcrypt.hash(req.body.password, 10);
+
+    const dbUser = new User({
+      username: user.username.toLowerCase(),
+      email: user.email.toLowerCase(),
+      password: user.password,
+    });
+
+    dbUser.save();
+    res.json({ message: "success" });
+  }
 });
 
 // check if valid email
 router.post("/register/email", (req, res) => {
-  UserModel.findOne({ email: req.body.email }).then((user) => {
+  User.findOne({ email: req.body.email }).then((user) => {
     if (user) {
       return res.status(400).json({ email: "email already registered" });
     } else {

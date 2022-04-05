@@ -8,11 +8,12 @@ import CreatePost from "./components/createPost";
 import Details from "./components/details";
 import Signup from "./components/signup";
 import AccountName from "./components/accountName";
+import Home from "./components/home";
 
 const App = () => {
   let element = useRoutes([
-    { path: "/", element: [<Navbar />, <BttmNavbar />] },
-    { path: "/:id", element: [<Navbar />, <BttmNavbar />, <Profile />] },
+    { path: "/", element: [<Home />] },
+    { path: "/:id", element: [<BttmNavbar />, <Profile />] },
     { path: "/p/:id", element: [<BttmNavbar />, <Post />] },
     { path: "/create", element: [<CreatePost />] },
     { path: "/search", element: [<Navbar />, <BttmNavbar />] },

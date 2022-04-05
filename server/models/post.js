@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
+  _id: String,
   owner: String,
   likes: Number,
   desc: String,
