@@ -6,7 +6,7 @@ import profile from "../assets/profile.jpg";
 import Login from "./login";
 
 const Feed = () => {
-  return <Login />;
+  return <div>feed</div>;
 };
 
 // const Comment = (props) => {

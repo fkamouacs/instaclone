@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 
-const Login = () => {
+const Login = (props) => {
   const [showLogin, setLogin] = useState(false);
   const [name, setName] = useState();
   const [password, setPassword] = useState();
@@ -11,6 +12,8 @@ const Login = () => {
     ? "login login__login-home"
     : "login login__home";
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     name === undefined ||
     password === undefined ||
@@ -18,14 +21,18 @@ const Login = () => {
     password === ""
       ? setActive("")
       : setActive("login__btn-active");
+  });
 
-    // fetch("/isUserAuth", {
-    //   headers: {
-    //     "x-access-token": localStorage.getItem("token"),
-    //   },
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => (data.isLoggedIn ? console.log("login") : null));
+  useEffect(() => {
+    fetch("http://localhost:5000/user/isUserAuth", {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    })
+      .then((res) => res.json())
+      .then((data) =>
+        data.isLoggedIn ? console.log("login") : console.log("not loggedin")
+      );
   });
 
   const logName = (e) => {
@@ -62,6 +69,8 @@ const Login = () => {
         .then((data) => {
           localStorage.setItem("token", data.token);
         });
+
+      props.setLoggedIn(true);
     } else {
       console.log("not active");
     }
