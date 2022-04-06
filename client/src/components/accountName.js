@@ -44,40 +44,41 @@ const AccountName = () => {
   };
 
   const next = async () => {
-    // create user
-    let status;
-    await fetch("http://localhost:5000/register", {
-      method: "POST",
-      body: JSON.stringify({
-        email: location.state[0],
-        username: username,
-        password: password,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => (status = res.status));
+    if (active) {
+      // create user
+      let status;
+      await fetch("http://localhost:5000/register", {
+        method: "POST",
+        body: JSON.stringify({
+          email: location.state[0],
+          username: username,
+          password: password,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((res) => (status = res.status));
 
-    // default profile
-    const profile = {
-      handle: username,
-      name: username,
-      bio: "",
-      followers: [],
-      follows: [],
-      posts: [],
-    };
+      // default profile
+      const profile = {
+        handle: username,
+        name: username,
+        bio: "",
+        followers: [],
+        follows: [],
+        posts: [],
+      };
+      // create profile
+      await fetch("http://localhost:5000/add_profile", {
+        method: "POST",
+        body: JSON.stringify(profile),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    // create profile
-    await fetch("http://localhost:5000/add_profile", {
-      method: "POST",
-      body: JSON.stringify(profile),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    status === 200 ? navigate(`/${username}`) : setInvalid(true);
+      status === 200 ? navigate(`/${username}`) : setInvalid(true);
+    }
   };
 
   return (

@@ -3,9 +3,9 @@ const router = express();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
-const { db } = require("../models/user");
 
-router.get("/isUserAuth", jwt.verifyJWT, (req, res) => {
+router.get("/user/isUserAuth", verifyJWT, async (req, res) => {
+  console.log("XD");
   return res.json({ isLoggedIn: true, username: req.user.username });
 });
 
@@ -45,9 +45,9 @@ router.post("/register/email", (req, res) => {
 });
 
 // log in a user
-router.get("/login", (req, res) => {
+router.post("/login", (req, res) => {
   const userLoggingIn = req.body;
-  User.findOne({ username: userLoggingIn.username }).then((dbUser) => {
+  User.findOne({ username: userLoggingIn.name }).then((dbUser) => {
     if (!dbUser) {
       return res.json({
         message: "Invalid username",
@@ -58,8 +58,8 @@ router.get("/login", (req, res) => {
       .then((isCorrect) => {
         if (isCorrect) {
           const payload = {
-            id: db.User._id,
-            username: dbUsername,
+            id: dbUser._id,
+            username: dbUser.username,
           };
           jwt.sign(
             payload,
@@ -67,14 +67,14 @@ router.get("/login", (req, res) => {
             { expiresIn: 86400 },
             (err, token) => {
               if (err) return res.json({ message: err });
-              return res.json({
+              return res.status(200).json({
                 message: "Success",
-                toekn: "Bearer" + token,
+                token: "Bearer" + token,
               });
             }
           );
         } else {
-          return res.json({
+          return res.status(400).json({
             message: "Invalid Email or password",
           });
         }

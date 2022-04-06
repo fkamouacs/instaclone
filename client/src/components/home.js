@@ -5,16 +5,16 @@ const Home = () => {
   const [loggedIn, setLoggedIn] = useState();
 
   useEffect(() => {
-    fetch("/isUserAuth", {
+    fetch("http://localhost:5000/user/isUserAuth", {
       headers: {
         "x-access-token": localStorage.getItem("token"),
       },
     })
       .then((res) => res.json())
       .then((data) =>
-        data.isLoggedIn ? setLoggedIn(true) : setLoggedIn(false)
+        data ? (data.isLoggedIn ? setLoggedIn(true) : setLoggedIn(false)) : null
       );
-  });
+  }, []);
 
   return (
     <div>

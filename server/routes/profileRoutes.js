@@ -23,6 +23,8 @@ router.post("/add_profile", async (request, response) => {
   }
 });
 
+module.exports = router;
+
 // router.get("/posts", async (request, response) => {
 //   const posts = await postModel.find({});
 
@@ -62,5 +64,3 @@ router.post("/add_profile", async (request, response) => {
 //     response.json(result);
 //   });
 // });
-
-module.exports = router;
