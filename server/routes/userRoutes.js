@@ -3,10 +3,23 @@ const router = express();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
+const secret = process.env.JWT_SECRET;
 
-router.get("/user/isUserAuth", verifyJWT, async (req, res) => {
-  console.log("XD");
-  return res.json({ isLoggedIn: true, username: req.user.username });
+router.get("/user/isUserAuth", async (req, res) => {
+  const token = req.headers["x-access-token"].split(" ")[1];
+
+  if (token != "null" && token) {
+    const decode = jwt.verify(token, secret);
+    res.json({
+      isLoggedIn: true,
+      data: decode,
+    });
+  } else {
+    res.json({
+      isLoggedIn: false,
+      data: "error",
+    });
+  }
 });
 
 // create a user
@@ -67,9 +80,10 @@ router.post("/login", (req, res) => {
             { expiresIn: 86400 },
             (err, token) => {
               if (err) return res.json({ message: err });
+
               return res.status(200).json({
                 message: "Success",
-                token: "Bearer" + token,
+                token: "Bearer " + token,
               });
             }
           );
@@ -81,29 +95,5 @@ router.post("/login", (req, res) => {
       });
   });
 });
-
-router.get("/getUsername", verifyJWT, (req, res) => {
-  res.json({ isLoggedIn: true, username: req.user.username });
-});
-
-function verifyJWT(req, res, next) {
-  const token = req.headers["x-access-token"]?.split(" ")[1];
-
-  if (token) {
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-      if (err)
-        return res.json({
-          isLoggedIn: false,
-          message: "Failed to Authenticate",
-        });
-      req.user = {};
-      req.user.id = decoded.id;
-      req.user.username = decoded.username;
-      next();
-    });
-  } else {
-    res.json({ message: "Incorrect Token Given", isLoggedIn: false });
-  }
-}
 
 module.exports = router;
