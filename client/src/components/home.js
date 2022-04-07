@@ -2,6 +2,8 @@ import React, { useState, useLayoutEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Login from "./login";
 import Feed from "./feed";
+import Navbar from "./navbar";
+import BttmNavbar from "./bttmNavbar";
 
 const Home = () => {
   const [loggedIn, setLoggedIn] = useState();
@@ -44,7 +46,13 @@ const Home = () => {
 
   const display = () => {
     if (loggedIn) {
-      return <Feed />;
+      return (
+        <div>
+          <Navbar />
+          <Feed />
+          <BttmNavbar />
+        </div>
+      );
     } else {
       return <Login setLoggedIn={setLoggedIn} />;
     }

@@ -4,9 +4,53 @@ import comment from "../assets/comment.svg";
 import msg from "../assets/msg.svg";
 import profile from "../assets/profile.jpg";
 import Login from "./login";
+import Post from "./post";
 
 const Feed = () => {
-  return <div>feed</div>;
+  const [feed, setFeed] = useState([]);
+  const [user, setUser] = useState({});
+  const [profile, setProfile] = useState({});
+
+  useEffect(() => {
+    // Get user
+
+    const fetchUser = async () => {
+      fetch("http://localhost:5000/user/isUserAuth", {
+        headers: {
+          "x-access-token": localStorage.getItem("token"),
+        },
+      })
+        .then(async (res) => await res.json())
+        .then((data) => {
+          setUser(data.data);
+        });
+    };
+    fetchUser();
+
+    return;
+  }, []);
+
+  useEffect(() => {
+    const fetchProfile = async (username) => {
+      fetch(`http://localhost:5000/${username}`)
+        .then(async (res) => await res.json())
+        .then((data) => {
+          setProfile(data);
+        });
+    };
+
+    fetchProfile(user.username);
+    return;
+  }, [user]);
+
+  const displayFeed = () => {
+    if (profile) {
+      // get user follows
+    }
+    return <div>{user.id}</div>;
+  };
+
+  return <div>{displayFeed()}</div>;
 };
 
 // const Comment = (props) => {
