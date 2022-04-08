@@ -40,9 +40,11 @@ router.post("/register", async (req, res) => {
       email: user.email.toLowerCase(),
       password: user.password,
     });
-
-    dbUser.save();
-    res.json({ message: "success" });
+    let id;
+    dbUser.save((err, user) => {
+      id = user.id;
+    });
+    res.status(200).json({ id: "!" });
   }
 });
 

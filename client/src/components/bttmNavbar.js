@@ -1,10 +1,17 @@
+import { useNavigate } from "react-router-dom";
 import home from "../assets/home.svg";
 import search from "../assets/search.svg";
 import upload from "../assets/upload.svg";
 import activity from "../assets/activity.svg";
 import profile from "../assets/profile.jpg";
 
-const BttmNavbar = () => {
+const BttmNavbar = (props) => {
+  const navigate = useNavigate();
+
+  const navToProfile = () => {
+    navigate(`/${props.user.username}`);
+  };
+
   return (
     <div className="bttmNav">
       <div className="bttmNav__home">
@@ -28,7 +35,7 @@ const BttmNavbar = () => {
         </a>
       </div>
       <div className="bttmNav__profile">
-        <a className="bttmNav__profile-link" href="/profile">
+        <a className="bttmNav__profile-link" onClick={navToProfile}>
           <img className="icon" src={profile} alt="profile" />
         </a>
       </div>

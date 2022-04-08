@@ -76,6 +76,10 @@ const Login = (props) => {
     }
   };
 
+  const signup = () => {
+    navigate("signup/email");
+  };
+
   const login = () => {
     return (
       <div className="login__login">
@@ -105,7 +109,9 @@ const Login = (props) => {
           </button>
           <div className="login__register">
             <p className="login__register-text">Dont have an account?</p>
-            <button className="login__signup-btn">Sign Up</button>
+            <button className="login__signup-btn" onClick={signup}>
+              Sign Up
+            </button>
           </div>
         </div>
       </div>
@@ -120,7 +126,9 @@ const Login = (props) => {
         </button>
 
         <div className="login__or">or</div>
-        <button className="login__signup-btn">Sign Up</button>
+        <button className="login__signup-btn" onClick={signup}>
+          Sign Up
+        </button>
       </div>
     );
   };

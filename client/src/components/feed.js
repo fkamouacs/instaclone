@@ -44,10 +44,28 @@ const Feed = () => {
   }, [user]);
 
   const displayFeed = () => {
-    if (profile) {
+    const isEmpty = () => {
+      for (var i in profile) return false;
+      return true;
+    };
+
+    if (!isEmpty()) {
       // get user follows
+      if (profile.follows.length) {
+        return <div>{user.id}</div>;
+      } else {
+        return (
+          <div className="feed__0follows">
+            <div className="feed__0follows-title">
+              YOURE NOT FOLLOWING ANYONE
+            </div>
+            <div className="feed__0follows-text">
+              Search a person or hashtag!
+            </div>
+          </div>
+        );
+      }
     }
-    return <div>{user.id}</div>;
   };
 
   return <div>{displayFeed()}</div>;

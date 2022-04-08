@@ -603,3 +603,21 @@ a {
   color: rgba(142, 142, 142, 1);
   margin-right: 4px;
 }
+
+.feed__0follows {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding: 152px 16px;
+}
+
+.feed__0follows-title {
+  font-size: 18px;
+  margin-bottom: 8px;
+  font-weight: 300;
+}
+
+.feed__0follows-text {
+  color: rgba(142, 142, 142, 1);
+}

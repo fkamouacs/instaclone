@@ -23,6 +23,10 @@ router.post("/add_profile", async (request, response) => {
   }
 });
 
+// follow a profile
+
+router.post("/follow/:id", async (req, res) => {});
+
 module.exports = router;
 
 // router.get("/posts", async (request, response) => {

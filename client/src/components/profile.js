@@ -10,9 +10,29 @@ import save from "../assets/save.svg";
 import foryou from "../assets/foryou.svg";
 
 const Profile = () => {
-  const [profile, setProfile] = useState([]);
+  const [profile, setProfile] = useState({});
+  const [user, setUser] = useState({});
   const location = useLocation();
   const path = location.pathname;
+
+  useEffect(() => {
+    // Get user
+
+    const fetchUser = async () => {
+      fetch("http://localhost:5000/user/isUserAuth", {
+        headers: {
+          "x-access-token": localStorage.getItem("token"),
+        },
+      })
+        .then(async (res) => await res.json())
+        .then((data) => {
+          setUser(data.data);
+        });
+    };
+    fetchUser();
+
+    return;
+  }, []);
 
   useEffect(async () => {
     // get profile
@@ -21,7 +41,7 @@ const Profile = () => {
       .then((data) => setProfile(data));
 
     // get posts
-    console.log(profile);
+
     return;
   }, []);
 
@@ -55,6 +75,8 @@ const Profile = () => {
     );
   };
 
+  console.log(user);
+  console.log(profile);
   return (
     <div className="profile">
       <div className="profile__nav">

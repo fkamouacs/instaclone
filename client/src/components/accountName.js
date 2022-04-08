@@ -47,7 +47,7 @@ const AccountName = () => {
     if (active) {
       // create user
       let status;
-      await fetch("http://localhost:5000/register", {
+      const res = await fetch("http://localhost:5000/register", {
         method: "POST",
         body: JSON.stringify({
           email: location.state[0],
@@ -57,7 +57,14 @@ const AccountName = () => {
         headers: {
           "Content-Type": "application/json",
         },
-      }).then((res) => (status = res.status));
+      })
+        .then((res) => {
+          res.json();
+          status = res;
+        })
+        .then((data) => {
+          console.log(data);
+        });
 
       // default profile
       const profile = {
@@ -77,7 +84,7 @@ const AccountName = () => {
         },
       });
 
-      status === 200 ? navigate(`/${username}`) : setInvalid(true);
+      status.status === 200 ? navigate(`/${username}`) : setInvalid(true);
     }
   };
 
