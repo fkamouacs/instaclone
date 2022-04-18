@@ -8,6 +8,7 @@ const AccountName = () => {
   const [password, setPassword] = useState();
   const [active, setActive] = useState();
   const [invalid, setInvalid] = useState(false);
+  const [id, setId] = useState("1");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,6 +19,31 @@ const AccountName = () => {
       ? setActive("")
       : setActive("signup__body-btn-active");
   });
+
+  useEffect(() => {
+    // default profile
+    if (id != "1") {
+      const profile = {
+        _id: id.id,
+        handle: username,
+        name: username,
+        bio: "",
+        followers: [],
+        follows: [],
+        posts: [],
+      };
+
+      fetch("http://localhost:5000/add_profile", {
+        method: "POST",
+        body: JSON.stringify(profile),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      console.log("XDXD");
+    }
+  }, [id]);
 
   const goBack = () => {
     navigate(-1);
@@ -47,7 +73,7 @@ const AccountName = () => {
     if (active) {
       // create user
       let status;
-      const res = await fetch("http://localhost:5000/register", {
+      await fetch("http://localhost:5000/register", {
         method: "POST",
         body: JSON.stringify({
           email: location.state[0],
@@ -59,32 +85,12 @@ const AccountName = () => {
         },
       })
         .then((res) => {
-          res.json();
-          status = res;
+          status = res.status;
+          return res.json();
         })
-        .then((data) => {
-          console.log(data);
-        });
+        .then((data) => setId(data));
 
-      // default profile
-      const profile = {
-        handle: username,
-        name: username,
-        bio: "",
-        followers: [],
-        follows: [],
-        posts: [],
-      };
-      // create profile
-      await fetch("http://localhost:5000/add_profile", {
-        method: "POST",
-        body: JSON.stringify(profile),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      status.status === 200 ? navigate(`/${username}`) : setInvalid(true);
+      status === 200 ? navigate(`/${username}`) : setInvalid(true);
     }
   };
 

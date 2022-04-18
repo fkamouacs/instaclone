@@ -9,11 +9,15 @@ const postRouter = require("./routes/postRoutes");
 const userRouter = require("./routes/userRoutes");
 const port = 5000;
 
-app.use(bodyParser.json());
-app.use(cors());
-app.use(express.json());
+const corsOptions = {
+  origin: "*",
+  credentials: true,
+  optionSucessStatus: 200,
+};
 
-app.options("*", cors());
+app.use(bodyParser.json());
+app.use(cors(corsOptions));
+app.use(express.json());
 
 app.use(profileRouter);
 app.use(postRouter);

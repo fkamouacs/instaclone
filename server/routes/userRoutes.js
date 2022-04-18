@@ -9,10 +9,30 @@ router.get("/user/isUserAuth", async (req, res) => {
   const token = req.headers["x-access-token"].split(" ")[1];
 
   if (token != "null" && token) {
-    const decode = jwt.verify(token, secret);
-    res.json({
-      isLoggedIn: true,
-      data: decode,
+    jwt.verify(token, secret, (err, decoded) => {
+      if (err) {
+        if (err.name === "TokenExpiredError")
+          return res.json({
+            status: "Failure",
+            msg: "TOKEN_EXPIRED",
+            details: {
+              error: "signin token expired",
+            },
+          });
+        else
+          return res.json({
+            status: "Failure",
+            msg: "TOKEN_ERROR",
+            details: {
+              error: "unable to parse token",
+            },
+          });
+      } else {
+        res.json({
+          isLoggedIn: true,
+          data: decoded,
+        });
+      }
     });
   } else {
     res.json({
@@ -40,11 +60,10 @@ router.post("/register", async (req, res) => {
       email: user.email.toLowerCase(),
       password: user.password,
     });
-    let id;
-    dbUser.save((err, user) => {
-      id = user.id;
+
+    dbUser.save(function (err, user) {
+      res.json({ id: user.id });
     });
-    res.status(200).json({ id: "!" });
   }
 });
 

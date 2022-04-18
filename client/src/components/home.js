@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect, useEffect } from "react";
 import { useNavigate, useRoutes } from "react-router-dom";
 import Login from "./login";
 import Feed from "./feed";
@@ -13,8 +13,18 @@ import AccountName from "./accountName";
 
 const Home = () => {
   const [loggedIn, setLoggedIn] = useState();
-  const [user, setUser] = useState();
-
+  const [user, setUser] = useState({
+    username: "",
+    id: "",
+  });
+  const [profile, setProfile] = useState({
+    _id: "",
+    handle: "",
+    name: "",
+    followers: [],
+    follows: [],
+    posts: [],
+  });
   const navigate = useNavigate();
 
   useLayoutEffect(() => {
@@ -48,7 +58,16 @@ const Home = () => {
         setUser(null);
       }
     };
-  }, []);
+  }, [loggedIn]);
+
+  useEffect(() => {
+    // get user profile
+    if (user.username != "") {
+      fetch(`http://localhost:5000/${user.username}`)
+        .then((res) => res.json())
+        .then((data) => setProfile(data));
+    }
+  }, [user]);
 
   const display = () => {
     if (loggedIn) {
@@ -68,7 +87,7 @@ const Home = () => {
     { path: "/", element: display() },
     {
       path: "/:id",
-      element: [<BttmNavbar user={user} />, <Profile user={user} />],
+      element: [<BttmNavbar user={user} />, <Profile user={profile} />],
     },
     { path: "/p/:id", element: [<BttmNavbar user={user} />, <Post />] },
     { path: "/create", element: [<CreatePost />] },

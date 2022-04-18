@@ -14,7 +14,7 @@ router.get("/:handle", async (request, response) => {
 // post a profile
 router.post("/add_profile", async (request, response) => {
   const profile = new profileModel(request.body);
-
+  console.log(request.body);
   try {
     await profile.save();
     response.send(profile);
@@ -24,8 +24,57 @@ router.post("/add_profile", async (request, response) => {
 });
 
 // follow a profile
+router.post("/follow/id", async (req, res) => {
+  const followingId = req.body.followingId;
+  const followerId = req.body.followerId;
 
-router.post("/follow/:id", async (req, res) => {});
+  //update follower following array
+  profileModel.findOne({ _id: followerId }, async (err, profile) => {
+    if (!profile.follows.includes(followingId)) {
+      profile.follows.push(followingId);
+      await profile.save();
+    }
+  });
+
+  //update following  follow array
+  profileModel.findOne({ _id: followingId }, async (err, profile) => {
+    if (!profile.followers.includes(followerId)) {
+      profile.followers.push(followerId);
+      await profile.save();
+      res.json(profile);
+    }
+  });
+});
+
+// unfollow a profile
+router.post("/unfollow/id", async (req, res) => {
+  const unfollowingId = req.body.unfollowingId;
+  const unfollowerId = req.body.unfollowerId;
+
+  //update unfollower following array
+  profileModel.findOne({ _id: unfollowerId }, async (err, user) => {
+    if (user.follows.length > 0) {
+      const result = user.follows.filter((profile) => {
+        profile._id == unfollowingId;
+      });
+
+      user.follows = result;
+
+      await user.save();
+    }
+  });
+
+  //update unfollowed follwoing array
+  profileModel.findOne({ _id: unfollowingId }, async (err, user) => {
+    const result = user.followers.filter(
+      (profile) => profile._id == unfollowerId
+    );
+
+    user.followers = result;
+    await user.save();
+    res.json(user);
+  });
+});
 
 module.exports = router;
 

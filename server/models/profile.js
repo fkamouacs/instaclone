@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const ProfileSchema = new Schema({
+  _id: String,
   handle: String,
   name: String,
   bio: String,

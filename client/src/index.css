@@ -382,6 +382,10 @@ a {
 /*               /PROFILE               */
 /* ==================================== */
 
+.profile__head-func {
+  width: 100%;
+}
+
 .profile__head-pfp {
   width: 77px;
   margin-right: 28px;
@@ -620,4 +624,51 @@ a {
 
 .feed__0follows-text {
   color: rgba(142, 142, 142, 1);
+}
+
+.profile__head-actions {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.profile__head-msg {
+  border: solid 1px rgba(219, 219, 219, 1);
+  color: rgba(38, 38, 38, 1);
+  background-color: transparent;
+  border-radius: 4px;
+  padding: 5px 25px;
+
+  font-weight: bold;
+}
+
+.profile__head-follow {
+  border: solid 1px rgba(219, 219, 219, 1);
+  color: #fff;
+  background-color: var(--action-color);
+  padding: 7px 12px;
+  border-radius: 4px;
+  line-height: 14px;
+  font-weight: bold;
+}
+
+.profile__head-unfollow {
+  border: solid 1px rgba(219, 219, 219, 1);
+  color: #fff;
+  padding: 7px 12px;
+  border-radius: 4px;
+  line-height: 14px;
+  font-weight: bold;
+}
+
+.profile__head-more {
+  border: solid 1px rgba(219, 219, 219, 1);
+  padding: 9px 12px;
+  border-radius: 4px;
+  line-height: 0;
+}
+
+.profile__header {
+  display: flex;
+  flex-direction: column;
 }
