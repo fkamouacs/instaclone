@@ -4,8 +4,9 @@ import Login from "./login";
 import Feed from "./feed";
 import Navbar from "./navbar";
 import BttmNavbar from "./bttmNavbar";
-import Profile from "./profile";
-import Post from "./post";
+import Profile from "./profile/profile";
+import Followers from "./profile/followers";
+import Post from "./profile/post";
 import CreatePost from "./createPost";
 import Details from "./details";
 import Signup from "./signup";
@@ -39,7 +40,7 @@ const Home = () => {
           data
             ? data.isLoggedIn
               ? updateStates(data.data, true)
-              : updateStates(data.data, false)
+              : updateStates(data, false)
             : null
         );
     };
@@ -55,13 +56,13 @@ const Home = () => {
         });
       } else {
         setLoggedIn(false);
-        setUser(null);
       }
     };
   }, [loggedIn]);
 
   useEffect(() => {
     // get user profile
+
     if (user.username != "") {
       fetch(`http://localhost:5000/${user.username}`)
         .then((res) => res.json())
@@ -88,6 +89,10 @@ const Home = () => {
     {
       path: "/:id",
       element: [<BttmNavbar user={user} />, <Profile user={profile} />],
+    },
+    {
+      path: "/:id/followers",
+      element: [<BttmNavbar user={user} />, <Followers user={profile} />],
     },
     { path: "/p/:id", element: [<BttmNavbar user={user} />, <Post />] },
     { path: "/create", element: [<CreatePost />] },

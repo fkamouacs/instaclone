@@ -39,7 +39,8 @@ a {
 .details__nav,
 .signup__nav,
 .signup-name__nav,
-.profile__nav {
+.profile__nav,
+.followers__nav {
   justify-content: space-between;
   border-bottom: 1px solid var(--border-color);
   padding: 0 var(--mobile-margin);
@@ -59,7 +60,8 @@ a {
 .details__nav,
 .signup__nav,
 .signup-name__nav,
-.profile__nav {
+.profile__nav,
+.followers__nav {
   display: flex;
   height: var(--mobile-nav-height);
 }
@@ -70,7 +72,8 @@ a {
 .details__nav > *,
 .signup__nav > *,
 .signup-name__nav > *,
-.profile__nav > * {
+.profile__nav > *,
+.followers__nav > * {
   align-self: center;
 }
 
@@ -195,7 +198,8 @@ a {
 .signup__nav-back,
 .signup-name__nav-back,
 .profile__nav-settings,
-.profile__nav-discover {
+.profile__nav-discover,
+.followers__nav-back {
   line-height: 0;
 }
 
@@ -203,7 +207,8 @@ a {
 .details__nav-title,
 .signup__nav-title,
 .signup-name__nav-title,
-.profile__nav-handle {
+.profile__nav-handle,
+.followers__nav-title {
   font-weight: bold;
   font-size: 16px;
 }
@@ -284,11 +289,13 @@ a {
 }
 
 .signup__nav-back,
-.signup-name__nav-back {
+.signup-name__nav-back,
+.followers__nav-back {
   flex-basis: 32px;
 }
 
-.signup__nav-dummy {
+.signup__nav-dummy,
+.followers__nav-dummy {
   flex-basis: 32px;
 }
 
@@ -428,11 +435,11 @@ a {
 .profile__stats {
   display: flex;
   justify-content: space-around;
-  padding: 12px 0;
+
   border: solid 1px var(--border-color);
   border-left: none;
   border-right: none;
-  margin-left: 4px;
+  padding-left: 12px;
 }
 
 .profile__stats-numposts,
@@ -442,6 +449,7 @@ a {
   flex-direction: column;
   align-items: center;
   color: #8e8e8e8e;
+  padding: 12px 4px;
 }
 .profile__stats-numposts-num,
 .profile__stats-followers-num,
@@ -463,7 +471,7 @@ a {
 }
 
 .profile__no-posts {
-  margin: 60px 44px 44px 60px;
+  margin: 60px 44px;
   text-align: center;
 }
 
@@ -671,4 +679,52 @@ a {
 .profile__header {
   display: flex;
   flex-direction: column;
+}
+
+.follower {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 16px;
+}
+
+.follower__content {
+  display: flex;
+}
+
+.follower__pfp {
+  margin-right: 12px;
+}
+
+.follower__pfp-img {
+  width: 30px;
+  height: 30px;
+}
+
+.follower__main {
+  display: flex;
+  flex-direction: column;
+}
+
+.follower__main-title {
+  display: flex;
+  flex: 0 0 auto;
+}
+
+.follower__main-seperate {
+  padding: 0 4px;
+}
+
+.follower__main-handle {
+  font-weight: bold;
+}
+
+.follower__main-name {
+  color: rgba(142, 142, 142, 1);
+}
+
+.follower__remove {
+  font-weight: bold;
+  padding: 5px 9px;
+  background-color: transparent;
+  border: 1px solid rgba(219, 219, 219, 1);
 }

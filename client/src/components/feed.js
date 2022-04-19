@@ -1,10 +1,4 @@
 import React, { useState, useEffect } from "react";
-import activity from "../assets/activity.svg";
-import comment from "../assets/comment.svg";
-import msg from "../assets/msg.svg";
-import profile from "../assets/profile.jpg";
-import Login from "./login";
-import Post from "./post";
 
 const Feed = () => {
   const [feed, setFeed] = useState([]);

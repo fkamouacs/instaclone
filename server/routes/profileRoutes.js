@@ -3,11 +3,19 @@ const profileModel = require("../models/profile");
 const router = express();
 const ObjectId = require("mongodb").ObjectId;
 
-// get a profile by id
+// get a profile by handle
 router.get("/:handle", async (request, response) => {
   profileModel.findOne(request.params, (err, profile) => {
     if (err) throw err;
     response.json(profile);
+  });
+});
+
+// get a profile by id
+router.get("/profile/:id", async (req, res) => {
+  profileModel.findOne({ _id: req.params.id }, (err, profile) => {
+    if (err) throw err;
+    res.json(profile);
   });
 });
 

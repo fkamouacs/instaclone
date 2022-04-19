@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import activity from "../assets/activity.svg";
-import comment from "../assets/comment.svg";
-import msg from "../assets/msg.svg";
-import profile from "../assets/profile.jpg";
+
+import activity from "../../assets/activity.svg";
+import comment from "../../assets/comment.svg";
+import msg from "../../assets/msg.svg";
+import profile from "../../assets/profile.jpg";
 
 // const Comment = (props) => {
 //   return (

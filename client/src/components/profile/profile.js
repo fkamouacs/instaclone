@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Post from "./post";
-import settings from "../assets/settings.svg";
-import discover from "../assets/discover.svg";
-import profilePic from "../assets/profile.jpg";
-import gallary from "../assets/gallary.svg";
-import feed from "../assets/feed.PNG";
-import save from "../assets/save.svg";
-import foryou from "../assets/foryou.svg";
-import more from "../assets/more.svg";
-import unfollow from "../assets/unfollow.svg";
+import settings from "../../assets/settings.svg";
+import discover from "../../assets/discover.svg";
+import profilePic from "../../assets/profile.jpg";
+import gallary from "../../assets/gallary.svg";
+import feed from "../../assets/feed.PNG";
+import save from "../../assets/save.svg";
+import foryou from "../../assets/foryou.svg";
+import more from "../../assets/more.svg";
+import unfollow from "../../assets/unfollow.svg";
 
 const Profile = (props) => {
   const [profile, setProfile] = useState({});
@@ -18,6 +18,7 @@ const Profile = (props) => {
   const [isFollowing, setFollowing] = useState();
   const location = useLocation();
   const path = location.pathname;
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Get user
@@ -73,6 +74,10 @@ const Profile = (props) => {
 
   const numFollows = () => {
     return profile.follows ? profile.follows.length : 0;
+  };
+
+  const handleFollowers = () => {
+    navigate("followers");
   };
 
   const handleFollow = () => {
@@ -179,7 +184,7 @@ const Profile = (props) => {
               <div className="profile__stats-numposts-num">{numPosts()}</div>
               {numPosts() != 1 ? "posts" : "post"}
             </div>
-            <div className="profile__stats-followers">
+            <div className="profile__stats-followers" onClick={handleFollowers}>
               <div className="profile__stats-followers-num">
                 {numFollowers()}
               </div>

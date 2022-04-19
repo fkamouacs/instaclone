@@ -1,13 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, useRoutes } from "react-router-dom";
-import Navbar from "./components/navbar";
-import Profile from "./components/profile";
-import Post from "./components/post";
-import BttmNavbar from "./components/bttmNavbar";
-import CreatePost from "./components/createPost";
-import Details from "./components/details";
-import Signup from "./components/signup";
-import AccountName from "./components/accountName";
+
 import Home from "./components/home";
 
 const App = () => {
