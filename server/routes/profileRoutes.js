@@ -8,6 +8,7 @@ router.get("/:handle", async (request, response) => {
   profileModel.findOne(request.params, (err, profile) => {
     if (err) throw err;
     response.json(profile);
+    console.log(profile);
   });
 });
 
@@ -22,13 +23,29 @@ router.get("/profile/:id", async (req, res) => {
 // post a profile
 router.post("/add_profile", async (request, response) => {
   const profile = new profileModel(request.body);
-  console.log(request.body);
+
   try {
     await profile.save();
     response.send(profile);
   } catch (e) {
     response.status(500).send(e);
   }
+});
+
+// upload profile pic
+router.post("/upload/pfp", async (req, res) => {
+  const id = req.body.id;
+
+  // find current user
+  profileModel.findOne({ _id: id }, async (err, profile) => {
+    try {
+      profile.pfp = req.body.url;
+      await profile.save();
+      res.json(profile.pfp);
+    } catch (err) {
+      console.error(err);
+    }
+  });
 });
 
 // follow a profile
@@ -79,6 +96,18 @@ router.post("/unfollow/id", async (req, res) => {
     );
 
     user.followers = result;
+    await user.save();
+    res.json(user);
+  });
+});
+
+router.post("/create/addPost_profile", async (req, res) => {
+  // find user
+  const userId = req.body.userId;
+  const postId = req.body.postId;
+  profileModel.findOne({ _id: userId }, async (err, user) => {
+    // add post
+    user.posts.push(postId);
     await user.save();
     res.json(user);
   });

@@ -6,17 +6,19 @@ const ObjectId = require("mongodb").ObjectId;
 // get a post by id
 router.get("/p/:id", async (request, response) => {
   const id = request.params.id;
-  postModel.findOne(id, function (err, post) {
-    response.send(post.json());
+  postModel.findOne({ _id: ObjectId(id) }, function (err, post) {
+    response.send(post);
   });
 });
 
 // post a post
-router.post("/add_post", async (request, response) => {
-  const post = new postModel(request.body);
+router.post("/create/add_post", async (request, response) => {
+  const newPost = new postModel(request.body);
+
   try {
-    await post.save();
-    response.send(post);
+    await newPost.save(function (err, post) {
+      response.json({ id: post.id });
+    });
   } catch (e) {
     response.status(500).send(e);
   }

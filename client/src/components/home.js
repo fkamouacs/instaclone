@@ -6,6 +6,7 @@ import Navbar from "./navbar";
 import BttmNavbar from "./bttmNavbar";
 import Profile from "./profile/profile";
 import Followers from "./profile/followers";
+import Following from "./profile/following";
 import Post from "./profile/post";
 import CreatePost from "./createPost";
 import Details from "./details";
@@ -76,7 +77,7 @@ const Home = () => {
         <div>
           <Navbar />
           <Feed />
-          <BttmNavbar user={user} />
+          <BttmNavbar user={profile} />
         </div>
       );
     } else {
@@ -88,16 +89,20 @@ const Home = () => {
     { path: "/", element: display() },
     {
       path: "/:id",
-      element: [<BttmNavbar user={user} />, <Profile user={profile} />],
+      element: [<Profile user={profile} />, <BttmNavbar user={profile} />],
     },
     {
       path: "/:id/followers",
-      element: [<BttmNavbar user={user} />, <Followers user={profile} />],
+      element: [<BttmNavbar user={profile} />, <Followers user={profile} />],
     },
-    { path: "/p/:id", element: [<BttmNavbar user={user} />, <Post />] },
+    {
+      path: "/:id/following",
+      element: [<BttmNavbar user={profile} />, <Following user={profile} />],
+    },
+    { path: "/p/:id", element: [<BttmNavbar user={profile} />, <Post />] },
     { path: "/create", element: [<CreatePost />] },
-    { path: "/search", element: [<Navbar />, <BttmNavbar user={user} />] },
-    { path: "/create/details", element: [<Details />] },
+    { path: "/search", element: [<Navbar />, <BttmNavbar user={profile} />] },
+    { path: "/create/details", element: [<Details user={profile} />] },
     { path: "/signup/email", element: [<Signup />] },
     { path: "signup/email/name", element: [<AccountName />] },
   ]);

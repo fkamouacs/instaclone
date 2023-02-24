@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Image } from "cloudinary-react";
 import Post from "./post";
 import settings from "../../assets/settings.svg";
 import discover from "../../assets/discover.svg";
@@ -20,9 +21,45 @@ const Profile = (props) => {
   const path = location.pathname;
   const navigate = useNavigate();
 
+  const url = "http://api.cloudinary.com/v1_1/dxyxmfpoh/image/upload";
+  const preset = "zkjuxobi";
+  const [image, setImage] = useState();
+
+  const onChange = async (e) => {
+    let pfpURL;
+
+    // submit to cloudinary
+    const formData = new FormData();
+    formData.append("file", e.target.files[0]);
+    formData.append("upload_preset", preset);
+
+    await fetch(url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((data) => (pfpURL = data.url));
+
+    //upload url to database
+    await fetch("http://localhost:5000/upload/pfp", {
+      method: "POST",
+      body: JSON.stringify({
+        url: pfpURL,
+        id: props.user._id,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        props.user.pfp = data;
+        setImage(data);
+      });
+  };
+
   useEffect(() => {
     // Get user
-
     const fetchUser = async () => {
       fetch("http://localhost:5000/user/isUserAuth", {
         headers: {
@@ -50,7 +87,7 @@ const Profile = (props) => {
     };
     fetchData();
     return;
-  }, [path]);
+  }, [path, image]);
 
   useEffect(() => {
     if (props.user) {
@@ -77,7 +114,11 @@ const Profile = (props) => {
   };
 
   const handleFollowers = () => {
-    navigate("followers");
+    navigate("followers", { state: profile });
+  };
+
+  const handleFollowing = () => {
+    navigate("following", { state: profile });
   };
 
   const handleFollow = () => {
@@ -130,7 +171,7 @@ const Profile = (props) => {
     if (length) {
       return profile.posts
         ? profile.posts.map((post) => {
-            return <Post key={post._id} post={post} />;
+            return <Post key={post._id} owner={profile} postId={post} />;
           })
         : null;
     }
@@ -143,7 +184,7 @@ const Profile = (props) => {
   };
 
   return (
-    <div>
+    <div className="profile">
       {isOwner && (
         <div className="profile">
           <div className="profile__nav">
@@ -158,10 +199,28 @@ const Profile = (props) => {
           <div className="profile__header">
             <div className="profile__head">
               <div className="profile__head-pfp-container">
-                <img
-                  className="profile__head-pfp"
-                  src={profilePic}
-                  alt="user pfp"
+                <label htmlFor="file-input">
+                  {props.user.pfp == "" ? (
+                    <img
+                      className="profile__head-pfp"
+                      src={profilePic}
+                      alt="user pfp"
+                    />
+                  ) : (
+                    <Image
+                      className="profile__head-pfp"
+                      cloudName="dxyxmfpoh"
+                      publicId={props.user.pfp}
+                    />
+                  )}
+                </label>
+
+                <input
+                  className="profile__head-pfp-input"
+                  id="file-input"
+                  type="file"
+                  name="pfp"
+                  onChange={onChange}
                 />
               </div>
               <div className="profile__head-func">
@@ -190,7 +249,7 @@ const Profile = (props) => {
               </div>
               {numFollowers() != 1 ? "followers" : "follower"}
             </div>
-            <div className="profile__stats-following">
+            <div className="profile__stats-following" onClick={handleFollowing}>
               <div className="profile__stats-following-num">{numFollows()}</div>
               following
             </div>
@@ -233,11 +292,19 @@ const Profile = (props) => {
           <div className="profile__header">
             <div className="profile__head">
               <div className="profile__head-pfp-container">
-                <img
-                  className="profile__head-pfp"
-                  src={profilePic}
-                  alt="user pfp"
-                />
+                {profile.pfp == "" ? (
+                  <img
+                    className="profile__head-pfp"
+                    src={profilePic}
+                    alt="user pfp"
+                  />
+                ) : (
+                  <Image
+                    className="profile__head-pfp"
+                    cloudName="dxyxmfpoh"
+                    publicId={profile.pfp}
+                  />
+                )}
               </div>
               <div className="profile__head-func">
                 <div className="profile__head-heading">
@@ -286,13 +353,13 @@ const Profile = (props) => {
               <div className="profile__stats-numposts-num">{numPosts()}</div>
               {numPosts() != 1 ? "posts" : "post"}
             </div>
-            <div className="profile__stats-followers">
+            <div className="profile__stats-followers" onClick={handleFollowers}>
               <div className="profile__stats-followers-num">
                 {numFollowers()}
               </div>
               {numFollowers() != 1 ? "followers" : "follower"}
             </div>
-            <div className="profile__stats-following">
+            <div className="profile__stats-following" onClick={handleFollowing}>
               <div className="profile__stats-following-num">{numFollows()}</div>
               following
             </div>

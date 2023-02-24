@@ -1,16 +1,18 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import close from "../assets/close.svg";
 
 const CreatePost = () => {
   let navigate = useNavigate();
+  const location = useLocation();
 
+  console.log(location.state);
   const goBack = () => {
     navigate(-1);
   };
 
   const next = () => {
-    navigate("details");
+    navigate("details", { state: location.state });
   };
 
   return (
@@ -31,7 +33,10 @@ const CreatePost = () => {
         </button>
       </div>
 
-      <div className="create-post__img"></div>
+      <img
+        className="create-post__img"
+        src={URL.createObjectURL(location.state)}
+      />
 
       <div className="create-post__edit-options">
         <button className="create-post__filter">

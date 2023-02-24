@@ -52,6 +52,7 @@ a {
   width: 100%;
   border-top: 1px solid var(--border-color);
   background-color: white;
+  margin-top: 50px;
 }
 
 .nav,
@@ -125,6 +126,7 @@ a {
 
 .post {
   margin-bottom: 15px;
+  max-width: 470px;
 }
 
 .post__owner {
@@ -138,6 +140,8 @@ a {
 .post__owner-pfp {
   width: 32px;
   height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .post__owner-handle {
@@ -148,8 +152,7 @@ a {
 }
 
 .post__img {
-  min-height: 275px;
-  background-color: #d8d8d8;
+  width: 100%;
 }
 
 .post__interact {
@@ -176,13 +179,20 @@ a {
 
 .post__body-desc {
   display: flex;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 }
 
 .post__body-owner,
 .post__comment-owner {
   padding-right: 4px;
   font-weight: bold;
+}
+
+.post__body-date {
+  margin-bottom: 16px;
+  color: #69696985;
+  font-size: 12px;
+  letter-spacing: 0.2px;
 }
 
 .post__comment {
@@ -223,8 +233,10 @@ a {
 }
 
 .create-post__img {
-  height: 375px;
-  background-color: #d8d8d8;
+  min-height: 355px;
+  width: 100%;
+  object-fit: contain;
+  border-bottom: 1px solid rgba(200, 200, 200, 1);
 }
 
 .create-post__edit-options {
@@ -269,6 +281,7 @@ a {
 }
 
 .details__caption {
+  display: flex;
   width: 100%;
   height: 81px;
   padding: 16px;
@@ -282,6 +295,19 @@ a {
   resize: none;
   height: 45px;
   line-height: 18px;
+}
+
+.details__caption-img {
+  height: 48px;
+}
+
+.details__caption-pfp {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  margin-top: -2px;
+  margin-right: 6px;
+  object-fit: cover;
 }
 
 .text-focus {
@@ -388,6 +414,9 @@ a {
 /* ==================================== */
 /*               /PROFILE               */
 /* ==================================== */
+.profile {
+  padding-bottom: 25px;
+}
 
 .profile__head-func {
   width: 100%;
@@ -395,7 +424,10 @@ a {
 
 .profile__head-pfp {
   width: 77px;
+  height: 77px;
   margin-right: 28px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .profile__head {
@@ -698,6 +730,8 @@ a {
 .follower__pfp-img {
   width: 30px;
   height: 30px;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .follower__main {
@@ -722,9 +756,49 @@ a {
   color: rgba(142, 142, 142, 1);
 }
 
+.follower__main-follow {
+  color: rgba(0, 149, 246, 1);
+}
+
 .follower__remove {
   font-weight: bold;
   padding: 5px 9px;
   background-color: transparent;
   border: 1px solid rgba(219, 219, 219, 1);
+}
+
+.profile__head-pfp-input {
+  display: none;
+}
+
+.bttmNav__upload-photo-input {
+  display: none;
+}
+
+.feed {
+  padding-bottom: 50px;
+  max-width: 470px;
+}
+
+.bttmNav__profile-pfp {
+  border-radius: 50%;
+  width: var(--mobile-icon-size);
+  object-fit: cover;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  padding-top: 4px;
+}
+
+@media (min-width: 470px) {
+  .post {
+    border: 1px solid var(--border-color);
+    border-radius: 7px;
+  }
+
+  .feed {
+    margin-top: 16px;
+  }
 }

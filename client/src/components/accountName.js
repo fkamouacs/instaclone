@@ -27,10 +27,13 @@ const AccountName = () => {
         _id: id.id,
         handle: username,
         name: username,
+        pfp: "",
         bio: "",
         followers: [],
         follows: [],
         posts: [],
+        likes: [],
+        saved: [],
       };
 
       fetch("http://localhost:5000/add_profile", {

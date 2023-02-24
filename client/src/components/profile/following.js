@@ -4,23 +4,22 @@ import { Image } from "cloudinary-react";
 import back from "../../assets/back.svg";
 import pfp from "../../assets/profile.jpg";
 
-const Followers = (props) => {
+const Following = (props) => {
   const navigate = useNavigate();
-
   const location = useLocation();
 
   const goBack = () => {
     navigate(-1);
   };
 
-  const displayFollowers = () => {
+  const displayFollowing = () => {
     if (location.state._id === props.user._id) {
-      return props.user.followers.map((followerId) => {
-        return <Follower id={followerId} key={followerId} />;
+      return props.user.follows.map((followingId) => {
+        return <Follows id={followingId} key={followingId} />;
       });
     } else {
-      return location.state.followers.map((followerId) => {
-        return <Follower id={followerId} key={followerId} />;
+      return location.state.follows.map((followingId) => {
+        return <Follows id={followingId} key={followingId} />;
       });
     }
   };
@@ -31,16 +30,18 @@ const Followers = (props) => {
         <div className="followers__nav-back">
           <img src={back} alt="back" onClick={goBack} />
         </div>
-        <div className="followers__nav-title">Followers</div>
+        <div className="followers__nav-title">Following</div>
         <div className="followers__nav-dummy"></div>
       </div>
 
-      <div className="followers__body">{displayFollowers()}</div>
+      <div className="followers__body">{displayFollowing()}</div>
     </div>
   );
 };
 
-const Follower = (props) => {
+const Follows = (props) => {
+  const location = useLocation();
+
   const [followerData, setFollowerData] = useState({
     _id: "",
     handle: "",
@@ -60,6 +61,7 @@ const Follower = (props) => {
     };
 
     fetchData();
+    console.log("XD");
   }, []);
 
   return (
@@ -96,4 +98,4 @@ const Follower = (props) => {
   );
 };
 
-export default Followers;
+export default Following;

@@ -7,9 +7,18 @@ import profile from "../assets/profile.jpg";
 
 const BttmNavbar = (props) => {
   const navigate = useNavigate();
-
+  console.log(props);
   const navToProfile = () => {
-    navigate(`/${props.user.username}`);
+    navigate(`/${props.user.handle}`);
+  };
+
+  const onChange = (e) => {
+    navigate("/create", { state: e.target.files[0] });
+  };
+
+  const getPfp = () => {
+    if (props.user.pfp) return props.user.pfp;
+    return profile;
   };
 
   return (
@@ -25,9 +34,17 @@ const BttmNavbar = (props) => {
         </a>
       </div>
       <div className="bttmNav__upload">
-        <a className="bttmNav__upload-link" href="/create">
+        <label htmlFor="photo-input">
           <img className="icon" src={upload} alt="upload" />
-        </a>
+        </label>
+
+        <input
+          className="bttmNav__upload-photo-input"
+          id="photo-input"
+          type="file"
+          name="photo"
+          onChange={onChange}
+        />
       </div>
       <div className="bttmNav__activity">
         <a className="bttmNav__activity-link" href="/activity">
@@ -36,7 +53,11 @@ const BttmNavbar = (props) => {
       </div>
       <div className="bttmNav__profile">
         <a className="bttmNav__profile-link" onClick={navToProfile}>
-          <img className="icon" src={profile} alt="profile" />
+          <img
+            className="bttmNav__profile-pfp icon"
+            src={getPfp()}
+            alt="profile"
+          />
         </a>
       </div>
     </div>
